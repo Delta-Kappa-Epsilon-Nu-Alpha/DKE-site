@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import Navigation from "./Navigation";
+import { getS3Url } from "@/lib/utils";
 
 export default function Header() {
   return (
@@ -9,7 +10,7 @@ export default function Header() {
         <div className="flex items-center justify-center w-10 h-10">
           <Link href="/" className="block">
             <Image
-              src="/badge.png"
+              src={getS3Url("images/badge.png")}
               alt="Fraternity Badge"
               width={40}
               height={40}

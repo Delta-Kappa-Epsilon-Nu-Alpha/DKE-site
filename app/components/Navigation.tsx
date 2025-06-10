@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
+import { getS3Url } from "@/lib/utils";
 
 const navigationItems = [
   { name: "Home", href: "/" },
@@ -61,7 +62,7 @@ export default function Navigation() {
             isMenuOpen ? "opacity-30" : "opacity-0"
           }`}
           style={{
-            backgroundImage: "url('/dkelion.svg')",
+            backgroundImage: `url(${getS3Url("images/dkelion.svg")})`,
             backgroundSize: "100%",
             backgroundPosition: "center",
             backgroundRepeat: "no-repeat",

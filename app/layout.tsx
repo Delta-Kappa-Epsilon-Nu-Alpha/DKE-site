@@ -37,7 +37,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`min-h-screen bg-white`}>
+      <body className="min-h-screen">
         <Header />
         <main className="relative z-10 pt-16">{children}</main>
       </body>

@@ -1,4 +1,4 @@
-// import Image from "next/image";
+import RedirectButton from "./components/RedirectButton";
 
 export default function Home() {
   return (
@@ -7,6 +7,9 @@ export default function Home() {
       <p className="text-lg text-gray-700">
         Content for home page will go here
       </p>
+      <RedirectButton href="/about" borderWidth="1px">
+        About Page Sample Button
+      </RedirectButton>
     </div>
   );
 }

@@ -8,7 +8,7 @@ export default function Home() {
         Content for home page will go here
       </p>
       <RedirectButton href="/about" borderWidth="1px">
-        Click me
+        About Page Sample Button
       </RedirectButton>
     </div>
   );

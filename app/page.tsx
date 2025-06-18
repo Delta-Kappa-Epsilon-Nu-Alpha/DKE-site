@@ -6,7 +6,7 @@ export default function Home() {
     <div
       className="bg-cover bg-center bg-no-repeat flex flex-col items-center relative"
       style={{
-        backgroundImage: `url(${getS3Url("images/gatorArialVert.jpg")})`,
+        backgroundImage: `url(${getS3Url("images/formalBeach.JPG")})`,
         minHeight: "calc(100vh - 4rem)",
       }}
     >
@@ -14,21 +14,15 @@ export default function Home() {
         <h1
           className="text-6xl md:text-8xl font-bold text-white tracking-wide leading-tight md:leading-normal"
           style={{
-            fontFamily: "'Times New Roman', serif",
+            fontFamily: "'Garamond', 'Times New Roman', serif",
             textShadow: `
-              0 0 15px rgba(0, 0, 0, 1),
-              2px 2px 4px rgba(0, 0, 0, 1),
-              4px 4px 8px rgba(0, 0, 0, 0.95),
-              6px 6px 12px rgba(0, 0, 0, 0.9),
-              8px 8px 16px rgba(0, 0, 0, 0.8),
-              0 0 40px rgba(0, 0, 0, 0.7),
-              -2px -2px 4px rgba(255, 255, 255, 0.3),
-              -1px -1px 2px rgba(255, 255, 255, 0.5),
-              1px 1px 2px rgba(255, 255, 255, 0.2)
+              0 0 4px rgba(0, 0, 0, 0.6),
+              1px 1px 2px rgba(0, 0, 0, 0.7),
+              0 0 10px rgba(0, 0, 0, 0.3)
             `,
             filter:
-              "drop-shadow(0 0 25px rgba(0, 0, 0, 0.9)) contrast(1.2) brightness(1.1)",
-            WebkitTextStroke: "1px rgba(0, 0, 0, 0.8)",
+              "drop-shadow(0 0 6px rgba(0, 0, 0, 0.4)) contrast(1.05) brightness(1.02)",
+            WebkitTextStroke: "0.3px rgba(0, 0, 0, 0.4)",
           }}
         >
           <span className="inline mr-2 md:inline md:mr-4">Delta</span>
@@ -37,24 +31,22 @@ export default function Home() {
         </h1>
       </div>
 
-      <div className="flex flex-row gap-15 md:gap-80 mt-4 md:mt-0">
+      <div className="flex flex-row gap-15 md:gap-80 mt-12 md:mt-4">
         <RedirectButton
           href="/rush"
-          borderColor="white"
-          textColor="white"
-          backgroundColor="rgba(0, 0, 0, 0.5)"
-          borderWidth="3px"
-          className="text-lg md:text-xl font-bold shadow-2xl hover:shadow-white/20 hover:bg-black/70 hover:scale-110 hover:border-yellow-400 hover:text-yellow-400 backdrop-blur-sm"
+          borderColor="black"
+          textColor="black"
+          borderWidth="1.5px"
+          className="text-lg md:text-2xl font-bold shadow-2xl hover:shadow-blue-500/30 hover:bg-blue-900/20 hover:scale-110 hover:border-gold-400 hover:text-gold-300 backdrop-blur-sm transition-all duration-300"
         >
           Rush
         </RedirectButton>
         <RedirectButton
           href="/about"
-          borderColor="white"
-          textColor="white"
-          backgroundColor="rgba(0, 0, 0, 0.5)"
-          borderWidth="3px"
-          className="text-lg md:text-xl font-bold shadow-2xl hover:shadow-white/20 hover:bg-black/70 hover:scale-110 hover:border-yellow-400 hover:text-yellow-400 backdrop-blur-sm"
+          borderColor="black"
+          textColor="black"
+          borderWidth="1.5px"
+          className="text-lg md:text-2xl font-bold shadow-2xl hover:shadow-blue-500/30 hover:bg-blue-900/20 hover:scale-110 hover:border-gold-400 hover:text-gold-300 backdrop-blur-sm transition-all duration-300"
         >
           About
         </RedirectButton>
@@ -62,26 +54,24 @@ export default function Home() {
 
       <div className="text-center absolute bottom-[15%] md:bottom-[8%]">
         <h2
-          className="text-xl md:text-3xl font-medium text-white tracking-wide"
+          className="text-2xl md:text-3xl font-medium text-white tracking-wide"
           style={{
-            fontFamily: "'Times New Roman', serif",
+            fontFamily: "'Garamond', 'Times New Roman', serif",
             textShadow: `
-              0 0 12px rgba(0, 0, 0, 1),
-              1px 1px 3px rgba(0, 0, 0, 1),
-              2px 2px 6px rgba(0, 0, 0, 0.95),
-              3px 3px 9px rgba(0, 0, 0, 0.9),
-              4px 4px 12px rgba(0, 0, 0, 0.8),
-              0 0 25px rgba(0, 0, 0, 0.7),
-              -1px -1px 2px rgba(255, 255, 255, 0.3),
-              -0.5px -0.5px 1px rgba(255, 255, 255, 0.5),
-              0.5px 0.5px 1px rgba(255, 255, 255, 0.2)
+              0 0 3px rgba(0, 0, 0, 0.6),
+              1px 1px 1px rgba(0, 0, 0, 0.7),
+              0 0 8px rgba(0, 0, 0, 0.3)
             `,
             filter:
-              "drop-shadow(0 0 20px rgba(0, 0, 0, 0.9)) contrast(1.2) brightness(1.1)",
-            WebkitTextStroke: "0.5px rgba(0, 0, 0, 0.8)",
+              "drop-shadow(0 0 4px rgba(0, 0, 0, 0.4)) contrast(1.05) brightness(1.02)",
+            WebkitTextStroke: "0.2px rgba(0, 0, 0, 0.4)",
           }}
         >
-          Gentlemen, Scholars, Jolly Good Fellows
+          <span className="block mr-2 md:inline md:mr-4">Gentlemen.</span>
+          <span className="block mr-2 md:inline md:mr-4">Scholars.</span>
+          <span className="block mr-2 md:inline md:mr-4">
+            Jolly Good Fellows.
+          </span>
         </h2>
       </div>
     </div>

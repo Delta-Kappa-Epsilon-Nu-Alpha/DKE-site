@@ -27,18 +27,19 @@ export default function RedirectButton({
     <div className="tablet:m-10 flex justify-between items-center mb-6">
       <a
         href={href}
-        className={`px-6 py-3 border rounded-3xl hover:scale-105 transition-all ease-out duration-300 link flex items-center gap-1 group ${className}`}
+        className={`px-6 py-3 border rounded-3xl hover:scale-105 transition-all ease-out duration-300 link flex items-center gap-1 group text-xl font-medium ${className}`}
         style={{
           borderColor: borderColor,
           color: textColor,
           backgroundColor: backgroundColor,
           borderWidth: borderWidth,
+          fontFamily: "'Arial', 'Helvetica', sans-serif",
         }}
       >
         {children}
         {arrow && (
           <ArrowRightIcon
-            className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2"
+            className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-2"
             style={{ color: textColor }}
           />
         )}

@@ -10,6 +10,7 @@ interface RedirectButtonProps {
   textColor?: string;
   backgroundColor?: string;
   borderWidth?: string;
+  className?: string;
 }
 
 export default function RedirectButton({
@@ -20,12 +21,13 @@ export default function RedirectButton({
   textColor = "black",
   backgroundColor = "transparent",
   borderWidth = "1px",
+  className = "",
 }: RedirectButtonProps) {
   return (
     <div className="tablet:m-10 flex justify-between items-center mb-6">
       <a
         href={href}
-        className="px-6 py-3 border rounded-3xl hover:scale-105 transition-all ease-out duration-300 link flex items-center gap-1 group"
+        className={`px-6 py-3 border rounded-3xl hover:scale-105 transition-all ease-out duration-300 link flex items-center gap-1 group ${className}`}
         style={{
           borderColor: borderColor,
           color: textColor,

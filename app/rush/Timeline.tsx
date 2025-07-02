@@ -19,11 +19,14 @@ const TIMELINE_CONFIG = {
   AMPLITUDE_PERCENT: 17, // Percentage of height (horizontal) or width (vertical)
   PERIOD_MULTIPLIER: 1, // Multiplier for the sine wave period
   PADDING_PERCENT: 10, // Percentage padding on sides (horizontal) or top/bottom (vertical)
-  LINE_THICKNESS: 8, // Timeline thickness in pixels
-  PROGRESS_THICKNESS: 12, // Progress line thickness in pixels
+  LINE_THICKNESS: 4, // Timeline thickness in pixels
+  PROGRESS_THICKNESS: 6, // Progress line thickness in pixels
   ANIMATION_DURATION: 2000, // Animation duration in milliseconds
   SELECTED_SPACING_MULTIPLIER: 1.2, // How much extra spacing to add around selected event
   SELECTION_TRANSITION_DURATION: 600, // Duration for spacing transition in ms
+  ACCENT_COLOR: "gold", // Gold color for progress line, selected elements, and popup glow
+  BUFFER_PERCENT: 8, // Percentage buffer from event centers to prevent progress line from being hidden behind images
+  POPUP_HEIGHT: 120, // Height of the fixed popup in pixels
 };
 
 const Timeline: React.FC = () => {
@@ -155,6 +158,7 @@ const Timeline: React.FC = () => {
 
   const events: RushEvent[] = rushInfo;
   const currentSelectedIndex = selectedEventIndex;
+  const selectedEvent = events[currentSelectedIndex];
 
   // Calculate current progress based on time
   const calculateCurrentProgress = () => {
@@ -252,13 +256,14 @@ const Timeline: React.FC = () => {
   // Calculate timeline dimensions
   const containerHeight = isHorizontal ? dimensions.height : 1200;
   const containerWidth = dimensions.width;
+  const timelineHeight = containerHeight - TIMELINE_CONFIG.POPUP_HEIGHT; // Reserve space for popup
 
   const padding = isHorizontal
     ? (containerWidth * TIMELINE_CONFIG.PADDING_PERCENT) / 100
-    : (containerHeight * TIMELINE_CONFIG.PADDING_PERCENT) / 100;
+    : (timelineHeight * TIMELINE_CONFIG.PADDING_PERCENT) / 100;
 
   const amplitude = isHorizontal
-    ? (containerHeight * TIMELINE_CONFIG.AMPLITUDE_PERCENT) / 100
+    ? (timelineHeight * TIMELINE_CONFIG.AMPLITUDE_PERCENT) / 100
     : (containerWidth * TIMELINE_CONFIG.AMPLITUDE_PERCENT) / 100;
 
   // Generate timeline path and event positions with dynamic spacing
@@ -267,8 +272,6 @@ const Timeline: React.FC = () => {
     const eventPositions: Array<{
       x: number;
       y: number;
-      isAbove: boolean;
-      isLeft: boolean;
     }> = [];
 
     const positions = calculateEventPositions();
@@ -277,7 +280,7 @@ const Timeline: React.FC = () => {
       // Horizontal timeline
       const startX = padding;
       const endX = containerWidth - padding;
-      const midY = containerHeight / 2;
+      const midY = TIMELINE_CONFIG.POPUP_HEIGHT + timelineHeight / 2; // Adjust for popup space
       const totalLength = endX - startX;
       const period =
         totalLength / TIMELINE_CONFIG.PERIOD_MULTIPLIER / (2 * Math.PI);
@@ -295,12 +298,11 @@ const Timeline: React.FC = () => {
         const progress = positions[index];
         const x = startX + totalLength * progress;
         const y = midY + amplitude * Math.sin((x - startX) / period);
-        const isAbove = y > midY; // Reversed: text above when event is below center
-        eventPositions.push({ x, y, isAbove, isLeft: false });
+        eventPositions.push({ x, y });
       });
     } else {
       // Vertical timeline
-      const startY = padding;
+      const startY = TIMELINE_CONFIG.POPUP_HEIGHT + padding;
       const endY = containerHeight - padding;
       const midX = containerWidth / 2;
       const totalLength = endY - startY;
@@ -320,8 +322,7 @@ const Timeline: React.FC = () => {
         const progress = positions[index];
         const y = startY + totalLength * progress;
         const x = midX + amplitude * Math.sin((y - startY) / period);
-        const isLeft = x > midX; // Reversed: text left when event is right of center
-        eventPositions.push({ x, y, isAbove: false, isLeft });
+        eventPositions.push({ x, y });
       });
     }
 
@@ -335,90 +336,198 @@ const Timeline: React.FC = () => {
     const currentProgress = calculateCurrentProgress();
     const animatedProgress = currentProgress * animationProgress;
 
-    if (animatedProgress <= 0) return { path: "", arrowPosition: null };
+    if (animatedProgress <= 0) return { path: "" };
 
     const progressPoints: string[] = [];
-    let arrowPosition: { x: number; y: number; angle: number } | null = null;
 
     if (isHorizontal) {
       const startX = padding;
       const endX = containerWidth - padding;
-      const midY = containerHeight / 2;
+      const midY = TIMELINE_CONFIG.POPUP_HEIGHT + timelineHeight / 2; // Adjust for popup space
       const totalLength = endX - startX;
       const period =
         totalLength / TIMELINE_CONFIG.PERIOD_MULTIPLIER / (2 * Math.PI);
 
-      const numPoints = Math.max(2, Math.floor(animatedProgress * 100));
+      // Find the two events we're between for progress calculation
+      const now = new Date("2025-09-16T18:00:00");
+      const eventDates = events.map((event) => new Date(event.datetime));
+
+      let currentSegment = 0;
+      let progressInSegment = 0;
+
+      for (let i = 0; i < eventDates.length - 1; i++) {
+        if (now >= eventDates[i] && now <= eventDates[i + 1]) {
+          currentSegment = i;
+          const segmentStart = eventDates[i].getTime();
+          const segmentEnd = eventDates[i + 1].getTime();
+          const currentTime = now.getTime();
+          progressInSegment =
+            (currentTime - segmentStart) / (segmentEnd - segmentStart);
+          break;
+        } else if (now < eventDates[i]) {
+          currentSegment = Math.max(0, i - 1);
+          progressInSegment = now < eventDates[0] ? 0 : 1;
+          break;
+        } else if (i === eventDates.length - 2 && now > eventDates[i + 1]) {
+          currentSegment = eventDates.length - 1;
+          progressInSegment = 1;
+          break;
+        }
+      }
+
+      // Calculate buffer-adjusted positions
+      const bufferDistance =
+        (TIMELINE_CONFIG.BUFFER_PERCENT / 100) * totalLength;
+
+      // Calculate the actual progress position using evenly spaced positions (not affected by selection)
+      let targetPosition = 0;
+      if (events.length <= 1) {
+        targetPosition = animatedProgress;
+      } else if (currentSegment >= events.length - 1) {
+        // After last event - stop at buffer distance from last event
+        const lastEventPos = 1; // Use fixed position, not dynamic
+        targetPosition = Math.min(
+          1,
+          lastEventPos + bufferDistance / totalLength
+        );
+      } else {
+        // Use evenly spaced positions for progress calculation
+        const segmentStartPos = currentSegment / (events.length - 1);
+        const segmentEndPos = (currentSegment + 1) / (events.length - 1);
+        const segmentProgress = progressInSegment * animatedProgress;
+
+        if (progressInSegment === 0) {
+          // Just after start event - stop at buffer distance from start event
+          targetPosition = segmentStartPos + bufferDistance / totalLength;
+        } else if (progressInSegment === 1) {
+          // Just before end event - stop at buffer distance from end event
+          targetPosition = segmentEndPos - bufferDistance / totalLength;
+        } else {
+          // Between events - interpolate with buffer consideration
+          const segmentLength = segmentEndPos - segmentStartPos;
+          const bufferOffset = (bufferDistance / totalLength) * 2; // Buffer on both sides
+          const adjustedSegmentLength = Math.max(
+            0.01,
+            segmentLength - bufferOffset
+          );
+          const adjustedProgress = Math.max(
+            0,
+            Math.min(1, (segmentProgress - 0.1) / 0.8)
+          ); // Compress progress to avoid buffers
+          targetPosition =
+            segmentStartPos +
+            bufferDistance / totalLength +
+            adjustedSegmentLength * adjustedProgress;
+        }
+      }
+
+      // Generate points along the path up to the target position
+      const numPoints = Math.max(2, Math.floor(targetPosition * 100));
 
       for (let i = 0; i <= numPoints; i++) {
-        const progress = (i / numPoints) * animatedProgress;
+        const progress = (i / numPoints) * targetPosition;
         const x = startX + totalLength * progress;
         const y = midY + amplitude * Math.sin((x - startX) / period);
         progressPoints.push(i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
-
-        // Calculate arrow position and angle at the end
-        if (i === numPoints) {
-          const prevProgress = Math.max(0, progress - 0.01);
-          const prevX = startX + totalLength * prevProgress;
-          const prevY = midY + amplitude * Math.sin((prevX - startX) / period);
-          const angle = (Math.atan2(y - prevY, x - prevX) * 180) / Math.PI;
-
-          // Position arrow slightly ahead of the progress line end
-          const offsetDistance = 20; // pixels ahead of the line
-          const offsetX = offsetDistance * Math.cos((angle * Math.PI) / 180);
-          const offsetY = offsetDistance * Math.sin((angle * Math.PI) / 180);
-
-          arrowPosition = {
-            x: x + offsetX,
-            y: y + offsetY,
-            angle,
-          };
-        }
       }
     } else {
-      const startY = padding;
+      const startY = TIMELINE_CONFIG.POPUP_HEIGHT + padding;
       const endY = containerHeight - padding;
       const midX = containerWidth / 2;
       const totalLength = endY - startY;
       const period =
         totalLength / TIMELINE_CONFIG.PERIOD_MULTIPLIER / (2 * Math.PI);
 
-      const numPoints = Math.max(2, Math.floor(animatedProgress * 100));
+      // Find the two events we're between for progress calculation
+      const now = new Date("2025-09-16T18:00:00");
+      const eventDates = events.map((event) => new Date(event.datetime));
+
+      let currentSegment = 0;
+      let progressInSegment = 0;
+
+      for (let i = 0; i < eventDates.length - 1; i++) {
+        if (now >= eventDates[i] && now <= eventDates[i + 1]) {
+          currentSegment = i;
+          const segmentStart = eventDates[i].getTime();
+          const segmentEnd = eventDates[i + 1].getTime();
+          const currentTime = now.getTime();
+          progressInSegment =
+            (currentTime - segmentStart) / (segmentEnd - segmentStart);
+          break;
+        } else if (now < eventDates[i]) {
+          currentSegment = Math.max(0, i - 1);
+          progressInSegment = now < eventDates[0] ? 0 : 1;
+          break;
+        } else if (i === eventDates.length - 2 && now > eventDates[i + 1]) {
+          currentSegment = eventDates.length - 1;
+          progressInSegment = 1;
+          break;
+        }
+      }
+
+      // Calculate buffer-adjusted positions
+      const bufferDistance =
+        (TIMELINE_CONFIG.BUFFER_PERCENT / 100) * totalLength;
+
+      // Calculate the actual progress position using evenly spaced positions (not affected by selection)
+      let targetPosition = 0;
+      if (events.length <= 1) {
+        targetPosition = animatedProgress;
+      } else if (currentSegment >= events.length - 1) {
+        // After last event - stop at buffer distance from last event
+        const lastEventPos = 1; // Use fixed position, not dynamic
+        targetPosition = Math.min(
+          1,
+          lastEventPos + bufferDistance / totalLength
+        );
+      } else {
+        // Use evenly spaced positions for progress calculation
+        const segmentStartPos = currentSegment / (events.length - 1);
+        const segmentEndPos = (currentSegment + 1) / (events.length - 1);
+        const segmentProgress = progressInSegment * animatedProgress;
+
+        if (progressInSegment === 0) {
+          // Just after start event - stop at buffer distance from start event
+          targetPosition = segmentStartPos + bufferDistance / totalLength;
+        } else if (progressInSegment === 1) {
+          // Just before end event - stop at buffer distance from end event
+          targetPosition = segmentEndPos - bufferDistance / totalLength;
+        } else {
+          // Between events - interpolate with buffer consideration
+          const segmentLength = segmentEndPos - segmentStartPos;
+          const bufferOffset = (bufferDistance / totalLength) * 2; // Buffer on both sides
+          const adjustedSegmentLength = Math.max(
+            0.01,
+            segmentLength - bufferOffset
+          );
+          const adjustedProgress = Math.max(
+            0,
+            Math.min(1, (segmentProgress - 0.1) / 0.8)
+          ); // Compress progress to avoid buffers
+          targetPosition =
+            segmentStartPos +
+            bufferDistance / totalLength +
+            adjustedSegmentLength * adjustedProgress;
+        }
+      }
+
+      // Generate points along the path up to the target position
+      const numPoints = Math.max(2, Math.floor(targetPosition * 100));
 
       for (let i = 0; i <= numPoints; i++) {
-        const progress = (i / numPoints) * animatedProgress;
+        const progress = (i / numPoints) * targetPosition;
         const y = startY + totalLength * progress;
         const x = midX + amplitude * Math.sin((y - startY) / period);
         progressPoints.push(i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
-
-        // Calculate arrow position and angle at the end
-        if (i === numPoints) {
-          const prevProgress = Math.max(0, progress - 0.01);
-          const prevY = startY + totalLength * prevProgress;
-          const prevX = midX + amplitude * Math.sin((prevY - startY) / period);
-          const angle = (Math.atan2(y - prevY, x - prevX) * 180) / Math.PI;
-
-          // Position arrow slightly ahead of the progress line end
-          const offsetDistance = 20; // pixels ahead of the line
-          const offsetX = offsetDistance * Math.cos((angle * Math.PI) / 180);
-          const offsetY = offsetDistance * Math.sin((angle * Math.PI) / 180);
-
-          arrowPosition = {
-            x: x + offsetX,
-            y: y + offsetY,
-            angle,
-          };
-        }
       }
     }
 
     return {
       path: progressPoints.join(" "),
-      arrowPosition,
     };
   };
 
-  const { path: progressPath, arrowPosition } = generateProgressPath();
+  const { path: progressPath } = generateProgressPath();
 
   const formatDate = (datetime: string) => {
     const date = new Date(datetime);
@@ -435,6 +544,78 @@ const Timeline: React.FC = () => {
       className="relative w-full overflow-hidden"
       style={{ height: `${containerHeight}px` }}
     >
+      {/* Fixed Event Popup */}
+      {selectedEvent && (
+        <div
+          className="absolute top-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-lg z-20"
+          style={{ height: `${TIMELINE_CONFIG.POPUP_HEIGHT}px` }}
+        >
+          <div className="flex items-center justify-center h-full px-4">
+            <div className="flex items-center space-x-4 max-w-4xl w-full">
+              {/* Event Image */}
+              <div
+                className="relative rounded-full border-4 bg-white overflow-hidden flex-shrink-0"
+                style={{
+                  width: "4rem",
+                  height: "4rem",
+                  borderColor: TIMELINE_CONFIG.ACCENT_COLOR,
+                }}
+              >
+                <Image
+                  src={getS3Url(selectedEvent.image)}
+                  alt={selectedEvent.name}
+                  fill
+                  className="object-cover"
+                  sizes="4rem"
+                />
+              </div>
+
+              {/* Event Information */}
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xl font-bold text-black mb-1">
+                  {selectedEvent.name}
+                </h3>
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+                  <span className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {formatDate(selectedEvent.datetime)}
+                  </span>
+                  <span className="flex items-center">
+                    <svg
+                      className="w-4 h-4 mr-1"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    {selectedEvent.location}
+                  </span>
+                </div>
+                {selectedEvent.description && (
+                  <p className="text-sm text-gray-700 mt-2 line-clamp-2">
+                    {selectedEvent.description}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Timeline SVG */}
       <svg
         className="absolute inset-0 w-full h-full"
@@ -465,32 +646,12 @@ const Timeline: React.FC = () => {
         {progressPath && (
           <path
             d={progressPath}
-            stroke="#FFD700"
+            stroke={TIMELINE_CONFIG.ACCENT_COLOR}
             strokeWidth={TIMELINE_CONFIG.PROGRESS_THICKNESS}
             fill="none"
             strokeLinecap="round"
             strokeDasharray="none"
-            style={{
-              filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.6))",
-            }}
           />
-        )}
-
-        {/* Arrow at current position */}
-        {arrowPosition && (
-          <g
-            transform={`translate(${arrowPosition.x}, ${arrowPosition.y}) rotate(${arrowPosition.angle})`}
-          >
-            <path
-              d="M 0 0 L -48 -24 L -32 0 L -48 24 Z"
-              fill="#FFD700"
-              stroke="black"
-              strokeWidth="1"
-              style={{
-                filter: "drop-shadow(0 0 4px rgba(255, 215, 0, 0.8))",
-              }}
-            />
-          </g>
         )}
       </svg>
 
@@ -519,14 +680,13 @@ const Timeline: React.FC = () => {
           >
             {/* Event Image */}
             <div
-              className={`relative rounded-full border-4 ${
-                isSelected
-                  ? "border-yellow-400 shadow-lg shadow-yellow-400/50"
-                  : "border-black"
-              } bg-white overflow-hidden transition-all duration-300 ease-out hover:scale-105`}
+              className={`relative rounded-full border-4 bg-white overflow-hidden transition-all duration-300 ease-out hover:scale-105`}
               style={{
                 width: imageSize,
                 height: imageSize,
+                borderColor: isSelected
+                  ? TIMELINE_CONFIG.ACCENT_COLOR
+                  : "black",
               }}
             >
               <Image
@@ -536,54 +696,6 @@ const Timeline: React.FC = () => {
                 className="object-cover"
                 sizes="(max-width: 768px) 4rem, 6rem"
               />
-            </div>
-
-            {/* Event Text */}
-            <div
-              className={`absolute transition-all duration-300 ease-out ${
-                isHorizontal
-                  ? position.isAbove
-                    ? "bottom-full mb-2 left-1/2 transform -translate-x-1/2"
-                    : "top-full mt-2 left-1/2 transform -translate-x-1/2"
-                  : position.isLeft
-                  ? "right-full mr-2 top-1/2 transform -translate-y-1/2"
-                  : "left-full ml-2 top-1/2 transform -translate-y-1/2"
-              }`}
-            >
-              <div
-                className={`bg-white/95 backdrop-blur-sm rounded-lg p-3 shadow-lg border text-center transition-all duration-300 ease-out ${
-                  isSelected
-                    ? "w-72 max-w-sm border-yellow-400 shadow-yellow-400/20"
-                    : "w-40 max-w-xs"
-                }`}
-              >
-                <h3
-                  className={`font-semibold ${
-                    isSelected ? "text-base md:text-lg" : "text-sm md:text-base"
-                  } text-black transition-all duration-300`}
-                >
-                  {event.name}
-                </h3>
-                <p
-                  className={`${
-                    isSelected ? "text-sm md:text-base" : "text-xs md:text-sm"
-                  } text-gray-600 transition-all duration-300`}
-                >
-                  {formatDate(event.datetime)}
-                </p>
-                <p
-                  className={`text-xs ${
-                    isSelected ? "md:text-sm" : ""
-                  } text-gray-500 transition-all duration-300`}
-                >
-                  {event.location}
-                </p>
-                {isSelected && event.description && (
-                  <p className="text-xs md:text-sm text-gray-700 mt-2 border-t pt-2 whitespace-normal break-words">
-                    {event.description}
-                  </p>
-                )}
-              </div>
             </div>
           </div>
         );

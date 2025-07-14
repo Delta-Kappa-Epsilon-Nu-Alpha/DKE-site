@@ -12,7 +12,13 @@ export default function ScrollArrow() {
     // Scroll to the next section
     const nextSection = document.querySelector("section");
     if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth" });
+      const headerHeight = 64; // h-16 = 64px
+      const elementTop = nextSection.offsetTop - headerHeight;
+      
+      window.scrollTo({
+        top: elementTop,
+        behavior: "smooth"
+      });
     }
 
     // Reset animation after it completes

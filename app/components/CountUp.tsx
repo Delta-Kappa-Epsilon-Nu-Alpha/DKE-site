@@ -11,6 +11,7 @@ interface CountUpProps {
   className?: string;
   startWhen?: boolean;
   separator?: string;
+  decimals?: number;
   onStart?: () => void;
   onEnd?: () => void;
 }
@@ -24,6 +25,7 @@ export default function CountUp({
   className = "",
   startWhen = true,
   separator = "",
+  decimals = 0,
   onStart,
   onEnd,
 }: CountUpProps) {
@@ -85,12 +87,12 @@ export default function CountUp({
       if (ref.current) {
         const options = {
           useGrouping: !!separator,
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
+          minimumFractionDigits: decimals,
+          maximumFractionDigits: decimals,
         };
 
         const formattedNumber = Intl.NumberFormat("en-US", options).format(
-          Number(latest.toFixed(0))
+          Number(latest.toFixed(decimals))
         );
 
         ref.current.textContent = separator

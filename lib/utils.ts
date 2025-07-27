@@ -49,4 +49,7 @@ export const photos = {
       "images/roof.jpg",
     ],
   },
+  about: {
+    landing: ""
+  }
 };

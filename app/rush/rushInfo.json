@@ -50,7 +50,7 @@
   {
     "name": "Banquet",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
-    "datetime": "2025-09-23T00:00:00",
+    "datetime": "2025-09-23T00:00:01",
     "location": "Invite Only",
     "image": "images/pongTrophy.JPG",
     "open": false

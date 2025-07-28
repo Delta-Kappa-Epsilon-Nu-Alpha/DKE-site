@@ -1,7 +1,7 @@
 [
   {
     "name": "IFC Info Session",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-05T18:30:00",
     "location": "Dodge Hall",
     "image": "images/pongTrophy.JPG",
@@ -9,7 +9,7 @@
   },
   {
     "name": "Gator Roast",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-06T14:00:00",
     "location": "814 Parker St",
     "image": "images/pongTrophy.JPG",
@@ -17,7 +17,7 @@
   },
   {
     "name": "Canes and Games",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-10T18:30:00",
     "location": "Centenial Quad",
     "image": "images/pongTrophy.JPG",
@@ -25,7 +25,7 @@
   },
   {
     "name": "IFC BBQ",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-13T12:00:00",
     "location": "Centenial Quad",
     "image": "images/pongTrophy.JPG",
@@ -33,15 +33,15 @@
   },
   {
     "name": "House Tours",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-15T19:00:00",
     "location": "Mission Hill",
     "image": "images/pongTrophy.JPG",
     "open": false
   },
   {
-    "name": "Pancakes and Pong",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "name": "Pancakes & Pong",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-18T18:30:00",
     "location": "4 Cherokee St",
     "image": "images/pongTrophy.JPG",
@@ -49,9 +49,9 @@
   },
   {
     "name": "Banquet",
-    "description": "Come see our various houses around the hill, meet brothers, and learn about the history of the fraternity.",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tincidunt maximus metus, vitae dictum purus sodales sit amet. Nulla semper non tortor a eleifend. Duis vel ipsum libero.",
     "datetime": "2025-09-23T18:30:00",
-    "location": "Centenial Quad",
+    "location": "Invite Only",
     "image": "images/pongTrophy.JPG",
     "open": false
   }

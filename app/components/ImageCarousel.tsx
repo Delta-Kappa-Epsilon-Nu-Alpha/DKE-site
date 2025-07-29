@@ -1,6 +1,6 @@
 "use client";
 
-import { getS3Url } from "@/lib/utils";
+import { getImgUrl } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
@@ -125,7 +125,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
           }
         >
           <Image
-            src={getS3Url(images[currentIndex])}
+            src={getImgUrl(images[currentIndex])}
             alt={`Slide ${currentIndex + 1}`}
             fill
             className="object-cover"
@@ -144,7 +144,7 @@ const ImageCarousel: React.FC<ImageCarouselProps> = ({
           }
         >
           <Image
-            src={getS3Url(images[nextIndex])}
+            src={getImgUrl(images[nextIndex])}
             alt={`Slide ${nextIndex + 1}`}
             fill
             className="object-cover"

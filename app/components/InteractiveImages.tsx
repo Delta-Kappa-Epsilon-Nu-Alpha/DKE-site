@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { getS3Url } from "@/lib/utils";
+import { getImgUrl } from "@/lib/utils";
 import CountUp from "./CountUp";
 import RotatingText from "./RotatingText";
 
@@ -57,7 +57,7 @@ export default function InteractiveImages() {
     const isHovered = hoveredIndex === index;
 
     return {
-      backgroundImage: `url(${getS3Url(images[index])})`,
+      backgroundImage: `url(${getImgUrl(images[index])})`,
       filter: isActive ? "none" : "grayscale(80%) brightness(0.7)",
       transform: isHovered ? "scale(1.1)" : "scale(1)",
       transition: "filter 0.3s ease-in-out, transform 0.3s ease-in-out",

@@ -5,11 +5,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function getS3Url(key: string): string {
-  const baseUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
+export function getImgUrl(key: string): string {
+  //S3 bucket use case -- older verson
+  // const baseUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
   // If running into caching issues, use first line to load cache (don't push)
   //return `${baseUrl}/${key}?t=${Date.now()}`;
-  return `${baseUrl}/${key}`;
+  // return `${baseUrl}/${key}`;
+  return `/dke_media/${key}`;
 }
 
 export const photos = {
@@ -50,6 +52,6 @@ export const photos = {
     ],
   },
   about: {
-    landing: ""
-  }
+    landing: "",
+  },
 };

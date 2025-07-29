@@ -2,7 +2,7 @@
 
 import { useState, useRef, useLayoutEffect } from "react";
 import Image from "next/image";
-import { getS3Url } from "@/lib/utils";
+import { getImgUrl } from "@/lib/utils";
 import rushInfo from "./rushInfo.json";
 
 export default function Rush() {
@@ -206,7 +206,7 @@ export default function Rush() {
       <div className="w-full h-screen bg-black relative">
         <div className="w-full flex justify-center pt-5">
           <video
-            src={getS3Url("videos/rushVideo1.mp4")}
+            src={getImgUrl("videos/rushVideo1.mp4")}
             className="w-1/4 h-3/4 object-cover rounded-2xl shadow-2xl"
             autoPlay
             muted
@@ -384,7 +384,7 @@ export default function Rush() {
               }`}
             >
               <Image
-                src={getS3Url(event.image)}
+                src={getImgUrl(event.image)}
                 alt={event.name}
                 width={500}
                 height={500}

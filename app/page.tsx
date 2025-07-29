@@ -1,4 +1,4 @@
-import { getS3Url, photos } from "@/lib/utils";
+import { getImgUrl, photos } from "@/lib/utils";
 import RedirectButton from "@/app/components/RedirectButton";
 import ScrollArrow from "@/app/components/ScrollArrow";
 import GridMotion from "@/app/components/photoGrid";
@@ -25,7 +25,7 @@ function HomeHero() {
     <div
       className="bg-cover bg-center bg-no-repeat flex flex-col items-center relative"
       style={{
-        backgroundImage: `url(${getS3Url(photos.home.landing)})`,
+        backgroundImage: `url(${getImgUrl(photos.home.landing)})`,
         minHeight: "calc(100vh - 4rem)",
       }}
     >
@@ -111,7 +111,7 @@ function HomeQuoteSection() {
           {/* Lion SVG - hidden on mobile, visible on desktop */}
           <div className="hidden md:block flex-shrink-0 overflow-hidden">
             <Image
-              src={getS3Url("images/dkelion.svg")}
+              src={getImgUrl("images/dkelion.svg")}
               alt="Lion"
               width={320}
               height={320}
@@ -122,7 +122,7 @@ function HomeQuoteSection() {
           {/* Lion SVG - behind text on mobile */}
           <div className="md:hidden absolute inset-0 flex items-center justify-start z-0">
             <Image
-              src={getS3Url("images/dkelion.svg")}
+              src={getImgUrl("images/dkelion.svg")}
               alt="Lion"
               width={320}
               height={320}
@@ -154,7 +154,7 @@ function HomeGridSection() {
   return (
     <section className="w-full h-screen relative overflow-hidden">
       <GridMotion
-        items={photos.home.gridImages.map((img) => getS3Url(img))}
+        items={photos.home.gridImages.map((img) => getImgUrl(img))}
         gradientColor="rgba(0, 0, 0, 0.1)"
       />
       <GridOverlay />

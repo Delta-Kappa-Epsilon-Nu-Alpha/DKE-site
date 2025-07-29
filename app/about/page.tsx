@@ -1,11 +1,11 @@
-import { getS3Url, photos } from "@/lib/utils";
+import { getImgUrl, photos } from "@/lib/utils";
 
 export default function About() {
   return (
     <div
       className="bg-cover bg-center bg-no-repeat flex flex-col items-center relative"
       style={{
-        backgroundImage: `url(${getS3Url(photos.home.landing)})`,
+        backgroundImage: `url(${getImgUrl(photos.home.landing)})`,
         minHeight: "calc(100vh - 4rem)",
       }}
     >

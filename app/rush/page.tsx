@@ -385,7 +385,7 @@ export default function Rush() {
 
           // Handle text visibility
           if (images.length > 0) {
-            const firstImage = images[0];
+            const firstImage = images[0]
             const rect = firstImage.getBoundingClientRect();
 
             if (rect.top >= 0 && rect.bottom <= window.innerHeight) {

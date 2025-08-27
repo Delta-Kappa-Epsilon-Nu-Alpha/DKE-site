@@ -281,6 +281,15 @@ export default function Rush() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Trigger timeline animation on load
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowText(true);
+    }, 300); // Small delay to ensure page is rendered
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // Smooth image expansion/collapse handler
   const handleImageInteraction = useCallback(
     (index: number | null, shouldCenter: boolean = true) => {
@@ -382,18 +391,6 @@ export default function Rush() {
           });
 
           setSelectedIndex(closestIndex);
-
-          // Handle text visibility
-          if (images.length > 0) {
-            const firstImage = images[0]
-            const rect = firstImage.getBoundingClientRect();
-
-            if (rect.top >= 0 && rect.bottom <= window.innerHeight) {
-              setShowText(true);
-            } else if (rect.top > window.innerHeight) {
-              setShowText(false);
-            }
-          }
 
           ticking = false;
         });

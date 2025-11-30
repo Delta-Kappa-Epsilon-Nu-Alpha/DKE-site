@@ -17,7 +17,6 @@ export interface CharityStats {
 export interface Charity {
   id: string;
   name: string;
-  category: "health" | "education" | "community";
   description: string;
   imageUrl?: string;
   imagePlaceholder: string;
@@ -31,6 +30,10 @@ export interface PhilanthropyData {
     subtitle: string;
     stats: Stat[];
     videoUrl: string;
+  };
+  quote: {
+    text: string;
+    author: string;
   };
   charities: Charity[];
 }
@@ -48,7 +51,7 @@ export const philanthropyData: PhilanthropyData = {
         iconName: "dollar",
       },
       {
-        value: "2,500",
+        value: "1,500",
         label: "Service Hours",
         iconName: "clock",
       },
@@ -65,102 +68,95 @@ export const philanthropyData: PhilanthropyData = {
     ],
     videoUrl: "videos/greekSing.mp4",
   },
+  quote: {
+    text: "There could be no definition of a successful life that does not include service to others.",
+    author: "- George H.W. Bush (Phi Chapter)",
+  },
   charities: [
     {
-      id: "stjude",
-      name: "St. Jude Children's Research Hospital",
-      category: "health",
+      id: "movember",
+      name: "The Movember Foundation",
       description:
-        "Leading the way the world understands, treats and defeats childhood cancer and other life-threatening diseases.",
-      imagePlaceholder: "St. Jude Children's Hospital",
-      imageUrl: "images/pongTrophy.JPG", // Add actual image URL here
+        "The world’s leading men’s health charity focused on prostate cancer, testicular cancer, mental health, and suicide prevention.",
+      imagePlaceholder: "Movember",
+      imageUrl: "images/movember.png",
       stats: {
-        primaryValue: "$12,500",
-        primaryLabel: "Raised in 2024",
-        secondaryValue: "500+",
-        secondaryLabel: "Hours Volunteered",
+        primaryValue: "$30,000+",
+        primaryLabel: "Raised this november",
+        secondaryValue: "56",
+        secondaryLabel: "Mustaches Grown",
       },
-      donationUrl: "example.com", // Add actual donation URL here
+      donationUrl: "https://us.movember.com/team/2434194",
     },
     {
-      id: "makeawish",
-      name: "Make-A-Wish Foundation",
-      category: "health",
+      id: "tobincommunitycenter",
+      name: "Tobin Community Center",
       description:
-        "Creating life-changing wishes for children with critical illnesses, bringing hope and joy to families.",
-      imagePlaceholder: "Make-A-Wish Foundation",
-      imageUrl: "images/pongTrophy.JPG",
+        "A local Boston community center providing youth programs, educational support, and recreational activities for families.",
+      imagePlaceholder: "Tobin Community Center",
+      imageUrl: "images/tobinCommunity.png",
       stats: {
-        primaryValue: "$8,000",
-        primaryLabel: "Raised in 2024",
-        secondaryValue: "3",
-        secondaryLabel: "Wishes Granted",
+        primaryValue: "$15,000+",
+        primaryLabel: "2nd most of all greek organizations",
+        secondaryValue: "20 DKE Divas",
+        secondaryLabel: "Dancing in blackman",
       },
-      donationUrl: undefined,
+    },
+    {
+      id: "americancancer",
+      name: "The American Cancer Society",
+      description:
+        "A nationwide organization dedicated to fighting cancer through research, patient support, prevention, and early detection programs.",
+      imagePlaceholder: "The American Cancer Society",
+      imageUrl: "images/americanCancerSociety.png",
+      stats: {
+        primaryValue: "$8,000+",
+        primaryLabel: "Raised in 2025",
+        secondaryValue: "20+",
+        secondaryLabel: "Brothers Registered",
+      }
     },
     {
       id: "foodbank",
-      name: "Community Food Bank",
-      category: "community",
+      name: "The Greater Boston Food Bank",
       description:
-        "Fighting hunger in our community by providing nutritious food to families in need through our monthly drives.",
-      imagePlaceholder: "Community Food Bank",
-      imageUrl: "images/pongTrophy.JPG",
+        "New England’s largest hunger-relief organization, distributing meals and groceries to families in need across the region.",
+      imagePlaceholder: "The Greater Boston Food Bank",
+      imageUrl: "images/foodBank.png",
       stats: {
-        primaryValue: "10,000 lbs",
-        primaryLabel: "Food Collected",
-        secondaryValue: "800+",
+        primaryValue: "120+",
+        primaryLabel: "Service Hours",
+        secondaryValue: "30+",
+        secondaryLabel: "Participating Brothers",
+      }
+    },
+    {
+      id: "bplusfoundation",
+      name: "B+ Foundation",
+      description:
+        "The largest provider of financial assistance to families of children with cancer, while also funding critical pediatric cancer research.",
+      imagePlaceholder: "B+ Foundation",
+      imageUrl: "images/bPlus.png",
+      stats: {
+        primaryValue: "$400+",
+        primaryLabel: "Funds Raised",
+        secondaryValue: "35+",
         secondaryLabel: "Families Helped",
-      },
-      donationUrl: undefined,
+      }
     },
     {
-      id: "boysgirlsclub",
-      name: "Boys & Girls Club",
-      category: "education",
+      id: "missionhillhousing",
+      name: "Mission Hill Housing Services",
       description:
-        "Mentoring youth through after-school programs, tutoring, and athletic activities to build tomorrow's leaders.",
-      imagePlaceholder: "Boys & Girls Club",
-      imageUrl: "images/pongTrophy.JPG",
+        "Providing housing to the less fortunate around the Mission Hill area.",
+      imagePlaceholder: "Mission Hill Housing",
+      imageUrl: "images/missionhillhousing.jpeg",
       stats: {
-        primaryValue: "750",
-        primaryLabel: "Mentoring Hours",
-        secondaryValue: "50",
-        secondaryLabel: "Kids Mentored",
-      },
-      donationUrl: undefined,
-    },
-    {
-      id: "habitat",
-      name: "Habitat for Humanity",
-      category: "community",
-      description:
-        "Building homes, communities and hope. Our brothers volunteer monthly on construction projects.",
-      imagePlaceholder: "Habitat for Humanity",
-      imageUrl: undefined,
-      stats: {
-        primaryValue: "2",
-        primaryLabel: "Homes Built",
-        secondaryValue: "600+",
-        secondaryLabel: "Build Hours",
-      },
-      donationUrl: undefined,
-    },
-    {
-      id: "scholars",
-      name: "First Generation Scholars",
-      category: "education",
-      description:
-        "Supporting first-generation college students with scholarships and mentorship programs.",
-      imagePlaceholder: "First Generation Scholars",
-      imageUrl: undefined,
-      stats: {
-        primaryValue: "$15,000",
-        primaryLabel: "Scholarships Given",
-        secondaryValue: "10",
-        secondaryLabel: "Students Supported",
-      },
-      donationUrl: undefined,
+        primaryValue: "$14,000+",
+        primaryLabel: "Given to keep housing affordable",
+        secondaryValue: "200+",
+        secondaryLabel: "Communitee Members Supported",
+      }
     },
   ],
 };

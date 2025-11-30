@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { getImgUrl } from "@/lib/utils";
 import CountUp from "./CountUp";
 import RotatingText from "./RotatingText";
+import { homeData } from "../homeData";
 
 export default function InteractiveImages() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -11,9 +12,9 @@ export default function InteractiveImages() {
   const sectionRef = useRef<HTMLElement>(null);
 
   const images = [
-    "images/formalCoolers.JPG",
-    "images/harrison.jpg",
-    "images/mexico4.JPG",
+    homeData.interactiveImages.gentlemen,
+    homeData.interactiveImages.scholars,
+    homeData.interactiveImages.jollyGoodFellows,
   ];
 
   // Handle mobile scroll-based highlighting
@@ -83,11 +84,14 @@ export default function InteractiveImages() {
           style={getInnerImageStyle(0)}
         />
         <div className="absolute bottom-0 left-0 right-0 z-10 text-white text-lg md:text-xl lg:text-2xl font-serif font-semibold drop-shadow-2xl text-center [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] pb-8 space-y-2">
-          <div className="whitespace-nowrap">4x honored by IHQ</div>
+          <div className="whitespace-nowrap">
+            <CountUp to={1500} from={0} duration={1.5} delay={0.25} />+ service
+            hours completed
+          </div>
           <div className="whitespace-nowrap">
             $
-            <CountUp to={45000} from={0} duration={1.5} delay={0.25} />+ raised
-            for charity
+            <CountUp to={50} from={0} duration={1.5} delay={0.25} />
+            ,000+ raised for charity
           </div>
         </div>
       </div>
@@ -164,10 +168,13 @@ export default function InteractiveImages() {
           style={getInnerImageStyle(2)}
         />
         <div className="absolute bottom-0 left-0 right-0 z-10 text-white text-lg md:text-xl lg:text-2xl font-serif font-semibold drop-shadow-2xl text-center [text-shadow:_2px_2px_4px_rgb(0_0_0_/_80%)] pb-8 space-y-2">
-          <div className="whitespace-nowrap">3,000,000+ Beers Consumed</div>
           <div className="whitespace-nowrap">
-            Alphonsus Noise Complaints:{" "}
-            <CountUp to={18} from={0} duration={1.5} delay={0.25} />
+            <CountUp to={30} from={0} duration={1.5} delay={0.25} />+ Events
+            Each Semester
+          </div>
+          <div className="whitespace-nowrap">Formals, Weekend Retreats,</div>
+          <div className="whitespace=nowrap">
+            Alumni Events, Socials, and more
           </div>
         </div>
       </div>

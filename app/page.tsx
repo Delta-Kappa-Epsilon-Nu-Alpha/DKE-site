@@ -1,4 +1,4 @@
-import { getImgUrl, photos } from "@/lib/utils";
+import { getImgUrl } from "@/lib/utils";
 import RedirectButton from "@/app/components/RedirectButton";
 import ScrollArrow from "@/app/components/ScrollArrow";
 import GridMotion from "@/app/components/photoGrid";
@@ -6,6 +6,7 @@ import GridOverlay from "@/app/components/GridOverlay";
 import InteractiveImages from "@/app/components/InteractiveImages";
 import SplitText from "@/app/components/SplitText";
 import Image from "next/image";
+import { homeData } from "./homeData";
 
 function HomeHero() {
   const letterStyle = {
@@ -25,7 +26,7 @@ function HomeHero() {
     <div
       className="bg-cover bg-center bg-no-repeat flex flex-col items-center relative"
       style={{
-        backgroundImage: `url(${getImgUrl(photos.home.landing)})`,
+        backgroundImage: `url(${getImgUrl(homeData.hero.image)})`,
         minHeight: "calc(100vh - 4rem)",
       }}
     >
@@ -37,24 +38,15 @@ function HomeHero() {
             marginBottom: 0,
           }}
         >
-          <span
-            className="text-[7rem] md:text-[12rem] font-bold text-white leading-none mb-0"
-            style={letterStyle}
-          >
-            Δ
-          </span>
-          <span
-            className="text-[7rem] md:text-[12rem] font-bold text-white leading-none mb-0"
-            style={letterStyle}
-          >
-            K
-          </span>
-          <span
-            className="text-[7rem] md:text-[12rem] font-bold text-white leading-none mb-0"
-            style={letterStyle}
-          >
-            E
-          </span>
+          {homeData.hero.letters.map((letter, index) => (
+            <span
+              key={index}
+              className="text-[7rem] md:text-[12rem] font-bold text-white leading-none mb-0"
+              style={letterStyle}
+            >
+              {letter}
+            </span>
+          ))}
         </div>
       </div>
       <div className="text-center -mt-4 md:-mt-6">
@@ -72,27 +64,22 @@ function HomeHero() {
             WebkitTextStroke: "0.2px rgba(0, 0, 0, 0.4)",
           }}
         >
-          Nu Alpha Chapter, Northeastern University
+          {homeData.hero.title}
         </h2>
       </div>
 
       <div className="flex flex-row gap-15 md:gap-80 mt-12 md:mt-4">
-        <RedirectButton
-          href="/rush"
-          textColor="white"
-          glassEffect={true}
-          className="text-lg md:text-2xl font-bold hover:shadow-blue-500/30 hover:scale-110 hover:text-gold-300 transition-all duration-300"
-        >
-          Rush
-        </RedirectButton>
-        <RedirectButton
-          href="/about"
-          textColor="white"
-          glassEffect={true}
-          className="text-lg md:text-2xl font-bold hover:shadow-blue-500/30 hover:scale-110 hover:text-gold-300 transition-all duration-300"
-        >
-          About
-        </RedirectButton>
+        {homeData.hero.buttons.map((button, index) => (
+          <RedirectButton
+            key={index}
+            href={button.href}
+            textColor="white"
+            glassEffect={true}
+            className="text-lg md:text-2xl font-bold hover:shadow-blue-500/30 hover:scale-110 hover:text-gold-300 transition-all duration-300"
+          >
+            {button.text}
+          </RedirectButton>
+        ))}
       </div>
       <ScrollArrow />
     </div>
@@ -111,7 +98,7 @@ function HomeQuoteSection() {
           {/* Lion SVG - hidden on mobile, visible on desktop */}
           <div className="hidden md:block flex-shrink-0 overflow-hidden">
             <Image
-              src={getImgUrl("images/dkelion.svg")}
+              src={getImgUrl(homeData.quote.image)}
               alt="Lion"
               width={320}
               height={320}
@@ -122,7 +109,7 @@ function HomeQuoteSection() {
           {/* Lion SVG - behind text on mobile */}
           <div className="md:hidden absolute inset-0 flex items-center justify-start z-0">
             <Image
-              src={getImgUrl("images/dkelion.svg")}
+              src={getImgUrl(homeData.quote.image)}
               alt="Lion"
               width={320}
               height={320}
@@ -133,9 +120,7 @@ function HomeQuoteSection() {
           {/* Quote with SplitText */}
           <div className="flex-1 text-center md:text-left relative z-10 pl-8 md:pl-0">
             <SplitText
-              text={`"I drank beer with my friends. Almost everyone did. Sometimes I
-           had too many beers. Sometimes others did. I liked beer. I still like
-           beer." - Brett Kavanaugh, Phi Yale`}
+              text={`${homeData.quote.text} ${homeData.quote.author}`}
               className="text-base md:text-xl lg:text-2xl font-normal text-gray-800 leading-tight"
               splitType="words"
               delay={50}
@@ -154,7 +139,7 @@ function HomeGridSection() {
   return (
     <section className="w-full h-screen relative overflow-hidden">
       <GridMotion
-        items={photos.home.gridImages.map((img) => getImgUrl(img))}
+        items={homeData.grid.images.map((img) => getImgUrl(img))}
         gradientColor="rgba(0, 0, 0, 0.1)"
       />
       <GridOverlay />

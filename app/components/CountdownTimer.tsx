@@ -19,11 +19,11 @@ export default function CountdownTimer() {
   });
 
   useEffect(() => {
-    const rushStartDate = new Date("2025-09-05T18:30:00");
+    const rushEndDate = new Date("2025-09-23T20:30:00");
 
     const calculateTimeLeft = () => {
       const now = new Date();
-      const difference = rushStartDate.getTime() - now.getTime();
+      const difference = rushEndDate.getTime() - now.getTime();
 
       if (difference > 0) {
         setTimeLeft({
@@ -46,7 +46,7 @@ export default function CountdownTimer() {
   return (
     <div className="text-center">
       <p className="text-lg md:text-3xl text-white font-medium mb-2">
-        Rush Starts in...
+        Rush Ends in...
       </p>
       <div className="flex gap-2 md:gap-6 justify-center items-center mb-4">
         <div className="flex flex-col items-center">
@@ -89,7 +89,9 @@ export default function CountdownTimer() {
         href="/rush"
         className="inline-flex items-center gap-2 text-white hover:text-blue-300 transition-colors duration-300 group"
       >
-        <span className="text-lg md:text-xl font-medium">See Our Schedule!</span>
+        <span className="text-lg md:text-xl font-medium">
+          See Our Schedule!
+        </span>
         <svg
           className="w-5 h-5 group-hover:scale-110 transition-transform duration-300"
           fill="currentColor"

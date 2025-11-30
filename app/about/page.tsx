@@ -16,16 +16,7 @@ import {
   Award,
   Target,
 } from "lucide-react";
-
-// Statistics and Data
-const statsData = {
-  founded: "1844",
-  activeMembers: "2,500+",
-  chaptersNationwide: "45",
-  charityRaised: "$1.2M",
-  championships: "12",
-  averageGPA: "3.6",
-};
+import { aboutData } from "./aboutData";
 
 // Type definitions
 interface StatItemProps {
@@ -197,6 +188,29 @@ const AboutPage: React.FC = () => {
     }
   };
 
+  const getIcon = (name?: string) => {
+    switch (name) {
+      case "Star":
+        return <Star className="w-8 h-8" />;
+      case "Users":
+        return <Users className="w-8 h-8" />;
+      case "Calendar":
+        return <Calendar className="w-8 h-8" />;
+      case "DollarSign":
+        return <DollarSign className="w-8 h-8" />;
+      case "Heart":
+        return <Heart className="w-8 h-8" />;
+      case "BookOpen":
+        return <BookOpen className="w-8 h-8" />;
+      case "Award":
+        return <Award className="w-8 h-8" />;
+      case "Target":
+        return <Target className="w-8 h-8" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="overflow-x-hidden">
       {/* Hero Section */}
@@ -206,7 +220,7 @@ const AboutPage: React.FC = () => {
           className="absolute inset-0 z-0"
         >
           <Image
-            src={getImgUrl("images/pongTrophy.JPG")}
+            src={getImgUrl(aboutData.hero.image)}
             alt="Brotherhood Hero"
             fill
             className="object-cover"
@@ -229,7 +243,7 @@ const AboutPage: React.FC = () => {
             className="mb-6"
           >
             <span className="inline-block px-6 py-2 border-2 border-amber-400 rounded-full text-amber-300 text-sm font-semibold tracking-widest uppercase mb-6">
-              Est. 1844
+              {aboutData.hero.est}
             </span>
           </motion.div>
 
@@ -240,7 +254,7 @@ const AboutPage: React.FC = () => {
               textShadow: "0 0 30px rgba(0,0,0,0.8)",
             }}
           >
-            DELTA KAPPA EPSILON
+            {aboutData.hero.title}
           </h1>
 
           <motion.p
@@ -249,7 +263,7 @@ const AboutPage: React.FC = () => {
             transition={{ duration: 1, delay: 0.5 }}
             className="text-lg md:text-xl lg:text-2xl font-light text-gray-200 max-w-3xl mx-auto leading-relaxed"
           >
-            Building Leaders, Creating Memories, Forging Lifelong Bonds
+            {aboutData.hero.subtitle}
           </motion.p>
 
           <motion.div
@@ -264,7 +278,7 @@ const AboutPage: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className="w-fit px-6 md:px-8 py-2 md:py-3 bg-rose-500 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Learn About Rush
+                {aboutData.hero.buttons.rush}
               </motion.button>
             </Link>
             <motion.button
@@ -273,7 +287,7 @@ const AboutPage: React.FC = () => {
               onClick={scrollToHistory}
               className="w-fit px-6 md:px-8 py-2 md:py-3 border-2 border-amber-400 text-amber-300 font-semibold rounded-full hover:bg-amber-400/10 transition-all duration-300"
             >
-              Our History
+              {aboutData.hero.buttons.history}
             </motion.button>
           </motion.div>
         </motion.div>
@@ -286,14 +300,10 @@ const AboutPage: React.FC = () => {
       >
         <div className="container mx-auto px-4">
           <TextBlock
-            title="Welcome to Our Legacy"
-            content={[
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-            ]}
+            title={aboutData.history.title}
+            content={aboutData.history.content}
             align="center"
-            icon={<Star className="w-8 h-8" />}
+            icon={getIcon(aboutData.history.iconName)}
           />
         </div>
       </section>
@@ -312,34 +322,20 @@ const AboutPage: React.FC = () => {
               className="text-3xl md:text-4xl font-bold text-amber-200 mb-4"
               style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
             >
-              Our Legacy in Numbers
+              {aboutData.stats.title}
             </h2>
-            <p className="text-gray-300 text-lg">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit
-            </p>
+            <p className="text-gray-300 text-lg">{aboutData.stats.subtitle}</p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            <StatItem
-              number={statsData.founded}
-              label="Founded"
-              icon={<Calendar className="w-8 h-8" />}
-            />
-            <StatItem
-              number={statsData.activeMembers}
-              label="Active Members"
-              icon={<Users className="w-8 h-8" />}
-            />
-            <StatItem
-              number={statsData.chaptersNationwide}
-              label="Chapters Nationwide"
-              icon={<Target className="w-8 h-8" />}
-            />
-            <StatItem
-              number={statsData.charityRaised}
-              label="Raised for Charity"
-              icon={<DollarSign className="w-8 h-8" />}
-            />
+            {aboutData.stats.items.map((stat, index) => (
+              <StatItem
+                key={index}
+                number={stat.number}
+                label={stat.label}
+                icon={getIcon(stat.iconName)}
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -359,12 +355,10 @@ const AboutPage: React.FC = () => {
               className="text-xl md:text-2xl lg:text-3xl italic text-slate-700 leading-relaxed mt-4"
               style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
             >
-              &ldquo;Lorem ipsum dolor sit amet consectetur adipiscing elit sed
-              do eiusmod tempor incididunt ut labore et dolore magna aliqua ut
-              enim ad minim veniam quis nostrud.&rdquo;
+              &ldquo;{aboutData.quote.text}&rdquo;
             </blockquote>
             <cite className="block mt-8 text-lg text-rose-600 font-semibold not-italic">
-              — Chapter President, Class of 2024
+              {aboutData.quote.author}
             </cite>
           </motion.div>
         </div>
@@ -384,41 +378,23 @@ const AboutPage: React.FC = () => {
               className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent mb-4"
               style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
             >
-              Our Core Values
+              {aboutData.values.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed
+              {aboutData.values.subtitle}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-7xl mx-auto">
-            <TextBlock
-              title="Gentlemen"
-              content={[
-                "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-                "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              ]}
-              icon={<Star className="w-8 h-8" />}
-              align="center"
-            />
-            <TextBlock
-              title="Scholars"
-              content={[
-                "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-                "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              ]}
-              icon={<BookOpen className="w-8 h-8" />}
-              align="center"
-            />
-            <TextBlock
-              title="Jolly Good Fellows"
-              content={[
-                "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
-                "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt.",
-              ]}
-              icon={<Heart className="w-8 h-8" />}
-              align="center"
-            />
+            {aboutData.values.items.map((value, index) => (
+              <TextBlock
+                key={index}
+                title={value.title}
+                content={value.content}
+                icon={getIcon(value.iconName)}
+                align="center"
+              />
+            ))}
           </div>
         </div>
       </section>
@@ -437,56 +413,30 @@ const AboutPage: React.FC = () => {
               className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-600 to-slate-700 bg-clip-text text-transparent mb-4"
               style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
             >
-              Life in Our Chapter
+              {aboutData.gallery.title}
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
+              {aboutData.gallery.subtitle}
             </p>
           </motion.div>
 
           <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6 max-w-7xl mx-auto">
-            <MasonryItem
-              src={getImgUrl("images/springFormal.jpg")}
-              alt="Spring Formal"
-              title="Spring Formal 2024"
-              description="Lorem ipsum dolor sit amet consectetur"
-              height={320}
-            />
-            <MasonryItem
-              src={getImgUrl("images/movember5k2.JPG")}
-              alt="Community Service"
-              title="Community Service"
-              description="Adipiscing elit sed do eiusmod tempor"
-              height={400}
-            />
-            <MasonryItem
-              src={getImgUrl("images/pongTrophy.JPG")}
-              alt="Intramural Champions"
-              title="Intramural Champions"
-              description="Incididunt ut labore et dolore magna"
-              height={350}
-            />
-            <MasonryItem
-              src={getImgUrl("images/semiLambda.JPG")}
-              alt="Academic Excellence"
-              title="Academic Excellence"
-              description="Ut enim ad minim veniam quis nostrud"
-              height={280}
-            />
-            <MasonryItem
-              src={getImgUrl("images/mexico3.JPG")}
-              alt="Annual Retreat"
-              title="Brotherhood Retreat"
-              description="Exercitation ullamco laboris nisi ut"
-              height={380}
-            />
-            <MasonryItem
-              src={getImgUrl("images/oldheads.JPG")}
-              alt="Alumni Weekend"
-              title="Alumni Weekend"
-              description="Aliquip ex ea commodo consequat duis"
-              height={340}
-            />
+            {aboutData.gallery.items.map((item, index) => {
+              // Define heights based on index to maintain the masonry look
+              const heights = [320, 400, 350, 280, 380, 340];
+              const height = heights[index % heights.length];
+
+              return (
+                <MasonryItem
+                  key={index}
+                  src={getImgUrl(item.src)}
+                  alt={item.alt}
+                  title={item.title}
+                  description={item.description}
+                  height={height}
+                />
+              );
+            })}
           </div>
         </div>
       </section>
@@ -495,14 +445,10 @@ const AboutPage: React.FC = () => {
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <TextBlock
-            title="Friends From the Heart, Forever"
-            content={[
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.",
-              "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-            ]}
+            title={aboutData.brotherhood.title}
+            content={aboutData.brotherhood.content}
             align="center"
-            icon={<Award className="w-8 h-8" />}
+            icon={getIcon(aboutData.brotherhood.iconName)}
           />
         </div>
       </section>
@@ -520,7 +466,7 @@ const AboutPage: React.FC = () => {
             >
               <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src={getImgUrl("images/groupGator.JPG")}
+                  src={getImgUrl(aboutData.excellence.image)}
                   alt="Brotherhood Excellence"
                   fill
                   className="object-cover"
@@ -529,7 +475,7 @@ const AboutPage: React.FC = () => {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-800/60 to-transparent" />
                 <div className="absolute bottom-6 left-6 text-white">
                   <span className="inline-block px-4 py-2 bg-amber-500/90 rounded-full text-slate-800 text-sm font-semibold">
-                    180 Years of Excellence
+                    {aboutData.excellence.badge}
                   </span>
                 </div>
               </div>
@@ -544,32 +490,30 @@ const AboutPage: React.FC = () => {
             >
               <div>
                 <span className="inline-block px-4 py-2 bg-amber-100 text-amber-700 rounded-full text-sm font-semibold mb-4">
-                  Our Mission
+                  {aboutData.excellence.missionBadge}
                 </span>
                 <h2
                   className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-slate-700 to-slate-800 bg-clip-text text-transparent mb-6"
                   style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
                 >
-                  Excellence in Everything We Do
+                  {aboutData.excellence.title}
                 </h2>
               </div>
 
               <p className="text-lg text-gray-700 leading-relaxed">
-                Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua ut
-                enim ad minim veniam quis nostrud exercitation.
+                {aboutData.excellence.description}
               </p>
 
               <div className="grid grid-cols-2 gap-6 mt-8">
                 <div className="text-center p-4 bg-white rounded-xl shadow-md">
                   <div className="text-2xl font-bold text-rose-600 mb-1">
-                    {statsData.championships}
+                    {aboutData.excellence.stats.championships}
                   </div>
                   <div className="text-sm text-gray-600">Championships</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl shadow-md">
                   <div className="text-2xl font-bold text-rose-600 mb-1">
-                    {statsData.averageGPA}
+                    {aboutData.excellence.stats.gpa}
                   </div>
                   <div className="text-sm text-gray-600">Average GPA</div>
                 </div>
@@ -590,31 +534,16 @@ const AboutPage: React.FC = () => {
               className="order-2 lg:order-1"
             >
               <h2 className="text-4xl font-bold mb-6 text-gray-900">
-                Our Historic Journey
+                {aboutData.journey.title}
               </h2>
-              <p className="text-lg text-gray-600 mb-4 leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
-              </p>
-              <p className="text-lg text-gray-600 mb-4 leading-relaxed">
-                Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                cupidatat non proident, sunt in culpa qui officia deserunt
-                mollit anim id est laborum.
-              </p>
-              <p className="text-lg text-gray-600 mb-4 leading-relaxed">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa
-                quae ab illo inventore veritatis et quasi architecto beatae
-                vitae dicta sunt explicabo.
-              </p>
-              <p className="text-lg text-gray-600 leading-relaxed">
-                Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit
-                aut fugit, sed quia consequuntur magni dolores eos qui ratione
-                voluptatem sequi nesciunt neque porro quisquam est.
-              </p>
+              {aboutData.journey.paragraphs.map((paragraph, index) => (
+                <p
+                  key={index}
+                  className="text-lg text-gray-600 mb-4 leading-relaxed"
+                >
+                  {paragraph}
+                </p>
+              ))}
             </motion.div>
 
             <motion.div
@@ -623,42 +552,22 @@ const AboutPage: React.FC = () => {
               transition={{ duration: 0.6 }}
               className="grid grid-cols-2 gap-5 order-1 lg:order-2"
             >
-              <div className="relative h-48 md:h-64 rounded-lg overflow-hidden">
-                <Image
-                  src={getImgUrl("images/pongTrophy.JPG")}
-                  alt="Historic Photo"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative h-48 md:h-64 rounded-lg overflow-hidden mt-8 md:mt-10">
-                <Image
-                  src={getImgUrl("images/pongTrophy.JPG")}
-                  alt="Modern Achievement"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative h-48 md:h-64 rounded-lg overflow-hidden">
-                <Image
-                  src={getImgUrl("images/pongTrophy.JPG")}
-                  alt="Brotherhood Activity"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
-              <div className="relative h-48 md:h-64 rounded-lg overflow-hidden mt-8 md:mt-10">
-                <Image
-                  src={getImgUrl("images/pongTrophy.JPG")}
-                  alt="Chapter Event"
-                  fill
-                  className="object-cover hover:scale-110 transition-transform duration-500"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
+              {aboutData.journey.images.map((image, index) => (
+                <div
+                  key={index}
+                  className={`relative h-48 md:h-64 rounded-lg overflow-hidden ${
+                    index % 2 !== 0 ? "mt-8 md:mt-10" : ""
+                  }`}
+                >
+                  <Image
+                    src={getImgUrl(image)}
+                    alt={`Historic Photo ${index + 1}`}
+                    fill
+                    className="object-cover hover:scale-110 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+              ))}
             </motion.div>
           </div>
         </div>
@@ -696,12 +605,10 @@ const AboutPage: React.FC = () => {
               className="text-xl md:text-2xl lg:text-3xl italic text-white leading-relaxed mt-4"
               style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
             >
-              &ldquo;Duis aute irure dolor in reprehenderit in voluptate velit
-              esse cillum dolore eu fugiat nulla pariatur excepteur sint
-              occaecat cupidatat non proident sunt in culpa.&rdquo;
+              &ldquo;{aboutData.darkQuote.text}&rdquo;
             </blockquote>
             <cite className="block mt-8 text-lg text-amber-300 font-semibold not-italic">
-              — Alumni Board Chairman, Class of 2010
+              {aboutData.darkQuote.author}
             </cite>
           </motion.div>
         </div>
@@ -711,12 +618,8 @@ const AboutPage: React.FC = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <TextBlock
-            title="Why Choose Our Brotherhood?"
-            content={[
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-              "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-              "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
-            ]}
+            title={aboutData.whyJoin.title}
+            content={aboutData.whyJoin.content}
             align="center"
           />
         </div>
@@ -739,7 +642,7 @@ const AboutPage: React.FC = () => {
             className="mb-6"
           >
             <span className="inline-block px-6 py-2 border-2 border-amber-400 rounded-full text-amber-300 text-sm font-semibold tracking-widest uppercase mb-8">
-              Join the Legacy
+              {aboutData.cta.badge}
             </span>
           </motion.div>
 
@@ -747,12 +650,11 @@ const AboutPage: React.FC = () => {
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-gradient-to-r from-white via-amber-100 to-white bg-clip-text text-transparent"
             style={{ fontFamily: "'Garamond', 'Times New Roman', serif" }}
           >
-            Ready to Join Our Brotherhood?
+            {aboutData.cta.title}
           </h2>
 
           <p className="text-xl md:text-2xl mb-10 text-gray-200 max-w-3xl mx-auto leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur adipiscing elit sed do
-            eiusmod
+            {aboutData.cta.subtitle}
           </p>
 
           <motion.div
@@ -767,7 +669,7 @@ const AboutPage: React.FC = () => {
                 whileTap={{ scale: 0.95 }}
                 className="w-fit bg-amber-500 text-slate-800 px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-bold shadow-xl hover:shadow-2xl transition-all duration-300"
               >
-                Learn About Rush
+                {aboutData.cta.buttons.rush}
               </motion.button>
             </Link>
             <motion.button
@@ -779,7 +681,7 @@ const AboutPage: React.FC = () => {
               whileTap={{ scale: 0.95 }}
               className="w-fit border-2 border-white text-white px-6 md:px-10 py-3 md:py-4 rounded-full text-base md:text-lg font-semibold hover:border-amber-400 hover:text-amber-300 transition-all duration-300"
             >
-              Contact Us
+              {aboutData.cta.buttons.contact}
             </motion.button>
           </motion.div>
         </motion.div>

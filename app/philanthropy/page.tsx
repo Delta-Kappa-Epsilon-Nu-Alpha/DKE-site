@@ -45,16 +45,6 @@ const PhilanthropyPage: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleDonate = (charityName: string, donationUrl?: string) => {
-    if (donationUrl) {
-      window.open(donationUrl, "_blank");
-    } else {
-      alert(
-        `Thank you for your interest in donating to ${charityName}! You will be redirected to the donation page.`
-      );
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-indigo-800">
       {/* Hero Section */}
@@ -186,7 +176,8 @@ const PhilanthropyPage: React.FC = () => {
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-purple-600 to-indigo-600 mx-auto mb-6 rounded-full" />
             <p className="text-lg text-gray-600">
-              Click on any charity to learn more about our partnership
+              &quot;{philanthropyData.quote.text}&quot;{" "}
+              {philanthropyData.quote.author}
             </p>
           </div>
 
@@ -249,10 +240,9 @@ const PhilanthropyPage: React.FC = () => {
 
                   {/* Donate Button */}
                   <button
-                    onClick={() =>
-                      handleDonate(charity.name, charity.donationUrl)
-                    }
-                    className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-red-600 hover:to-red-700 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 group"
+                    onClick={() => window.open(charity.donationUrl, "_blank")}
+                    disabled={!charity.donationUrl}
+                    className="w-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold py-3 px-6 rounded-xl hover:from-red-600 hover:to-red-700 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-center justify-center gap-2 group disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none"
                   >
                     <Heart className="w-5 h-5 group-hover:scale-110 transition-transform" />
                     Donate Now

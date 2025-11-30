@@ -9,7 +9,7 @@ import {
 } from "react";
 import Image from "next/image";
 import { getImgUrl } from "@/lib/utils";
-import rushInfo from "./rushInfo.json";
+import { rushData } from "./rushData";
 
 // ============================================
 // CONSTANTS
@@ -91,7 +91,7 @@ const TickMarks = ({
   showText: boolean;
   isMobile: boolean;
 }) => {
-  const totalEvents = rushInfo.length;
+  const totalEvents = rushData.length;
   const ticks = [];
 
   for (let i = 0; i < totalEvents; i++) {
@@ -175,7 +175,7 @@ const TimelineText = ({
 }) => {
   return (
     <>
-      {rushInfo.map((event, index) => {
+      {rushData.map((event, index) => {
         const distance = index - selectedIndex;
         const opacity = calculateOpacity(distance);
         const isSelected = index === selectedIndex;
@@ -228,7 +228,7 @@ const ImageOverlay = ({
   isExpanded,
   isMobile,
 }: {
-  event: (typeof rushInfo)[0];
+  event: (typeof rushData)[0];
   isExpanded: boolean;
   isMobile: boolean;
 }) => {
@@ -503,7 +503,7 @@ export default function Rush() {
             paddingLeft: isMobile ? "15px" : "0px", // Shift mobile images right to center between text
           }}
         >
-          {rushInfo.map((event, index) => {
+          {rushData.map((event, index) => {
             const isExpanded = expandedImageIndex === index;
             const isSelected = index === selectedIndex;
 

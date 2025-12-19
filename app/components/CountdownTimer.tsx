@@ -19,7 +19,7 @@ export default function CountdownTimer() {
   });
 
   useEffect(() => {
-    const rushEndDate = new Date("2025-09-23T20:30:00");
+    const rushEndDate = new Date("2026-01-23T21:30:00");
 
     const calculateTimeLeft = () => {
       const now = new Date();

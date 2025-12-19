@@ -103,7 +103,8 @@ export const aboutData: AboutData = {
   },
   stats: {
     title: "Our Legacy in Numbers",
-    subtitle: "Over 180 years of excellence, leadership, and brotherhood across North America",
+    subtitle:
+      "Over 180 years of excellence, leadership, and brotherhood across North America",
     items: [
       {
         number: "1844",
@@ -133,7 +134,8 @@ export const aboutData: AboutData = {
   },
   values: {
     title: "Our Core Values",
-    subtitle: "The three pillars that define every DKE brother and guide our fraternity's mission",
+    subtitle:
+      "The three pillars that define every DKE brother and guide our fraternity's mission",
     items: [
       {
         title: "Gentlemen",
@@ -163,7 +165,8 @@ export const aboutData: AboutData = {
   },
   gallery: {
     title: "Life in Our Chapter",
-    subtitle: "Experience the brotherhood, excellence, and traditions that define DKE",
+    subtitle:
+      "Experience the brotherhood, excellence, and traditions that define DKE",
     items: [
       {
         src: "images/springFormal.jpg",

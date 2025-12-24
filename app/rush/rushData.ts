@@ -57,7 +57,7 @@ export const rushData: RushEvent[] = [
       "PNMs are guided through our nine houses in Mission Hill, showcasing our rooms, backyards, and event spaces. The night wraps up with dinner, s?mores, and a campfire hangout at one of the houses.",
     datetime: "2026-01-18T19:00:00",
     location: "Mission Hill",
-    image: "images/house.JPG",
+    image: "images/house.jpg",
     open: false,
   },
   {

@@ -56,7 +56,7 @@ export interface AboutData {
     title: string;
     description: string;
     stats: {
-      championships: string;
+      dance_podiums: string;
       gpa: string;
     };
   };
@@ -223,8 +223,8 @@ export const aboutData: AboutData = {
     description:
       "Delta Kappa Epsilon has produced five U.S. Presidents, countless business leaders, and distinguished alumni across every field. We maintain our commitment to excellence by attracting and developing the finest young men who will become tomorrow's leaders.",
     stats: {
-      championships: "5",
-      gpa: "Presidents",
+      dance_podiums: "3",
+      gpa: "3.57",
     },
   },
   journey: {

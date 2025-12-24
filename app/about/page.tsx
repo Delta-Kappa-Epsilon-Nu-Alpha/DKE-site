@@ -507,9 +507,9 @@ const AboutPage: React.FC = () => {
               <div className="grid grid-cols-2 gap-6 mt-8">
                 <div className="text-center p-4 bg-white rounded-xl shadow-md">
                   <div className="text-2xl font-bold text-rose-600 mb-1">
-                    {aboutData.excellence.stats.championships}
+                    {aboutData.excellence.stats.dance_podiums}
                   </div>
-                  <div className="text-sm text-gray-600">Championships</div>
+                  <div className="text-sm text-gray-600">Dance Podiums</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl shadow-md">
                   <div className="text-2xl font-bold text-rose-600 mb-1">

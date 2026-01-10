@@ -12,7 +12,7 @@ export const rushData: RushEvent[] = [
     name: "IFC Info Session",
     description:
       "An informative presentation on Northeastern Fraternity Rush and opportunity to meet our brothers and the IFC",
-    datetime: "2026-01-09T18:30:00",
+    datetime: "2026-01-09T19:00:00",
     location: "Dodge Hall",
     image: "images/ifc.jpeg",
     open: true,
@@ -20,42 +20,26 @@ export const rushData: RushEvent[] = [
   {
     name: "Brothers & Brisket",
     description:
-      "Slow cooked Brisket, variety of sides, and a chance to bond with our brothers over a delicious meal.",
+      "Slow cooked Brisket, variety of sides, and a chance to bond with our brothers over a delicious meal. Meet at Centennial at 1:45 PM to walk over.",
     datetime: "2026-01-10T14:00:00",
     location: "814 Parker St",
     image: "images/rushBbq.jpeg",
     open: true,
   },
-  // {
-  //   name: "Canes & Games",
-  //   description:
-  //     "An afternoon of spikeball, cornhole, die, and lawn games at West Village Quad, paired with a catered Raising Cane's dinner. It?s the perfect chance to relax, enjoy some great food, and bond over friendly competition.",
-  //   datetime: "2025-09-10T18:30:00",
-  //   location: "West Village Quad",
-  //   image: "images/canesAndGames.PNG",
-  //   open: true,
-  // },
   {
-    name: "Poker Night",
-    description: "Poker. Cigars. Drinks. A true gentlemen's night.",
-    datetime: "2026-01-14T18:00:00",
-    location: "Invite Only",
-    image: "images/poker.JPG",
-    open: true,
-  },
-  {
-    name: "Wing Night",
-    description: "A wide selection of wings, drinks, sports, and brothers.",
-    datetime: "2026-01-15T18:00:00",
-    location: "Centennial Quad",
+    name: "Wings and Wagers",
+    description:
+      "A wide selection of wings, drinks, sports, and brothers. Meet at Centennial at 6:15 PM to walk over.",
+    datetime: "2026-01-15T18:30:00",
+    location: "4 Cherokee St",
     image: "images/fire3.JPG",
     open: true,
   },
   {
     name: "House Tours",
     description:
-      "PNMs are guided through our nine houses in Mission Hill, showcasing our rooms, backyards, and event spaces. The night wraps up with dinner, s?mores, and a campfire hangout at one of the houses.",
-    datetime: "2026-01-18T19:00:00",
+      "PNMs are guided through our nine houses in Mission Hill, showcasing our rooms, backyards, and event spaces. The night wraps up with dinner, s?mores, and a campfire hangout at one of the houses. Meet at Centennial at 6:15 PM to walk over.",
+    datetime: "2026-01-18T18:30:00",
     location: "Mission Hill",
     image: "images/house.jpg",
     open: false,
@@ -63,9 +47,9 @@ export const rushData: RushEvent[] = [
   {
     name: "Pancakes & Pong",
     description:
-      "PNMs team up with a brother of their choice for a bracket-style pong tournament, all competing for the legendary DKE Trophy. Alongside the tournament, we serve up fresh pancakes and sausages to keep everyone fueled during the games.",
+      "PNMs team up with a brother of their choice for a bracket-style pong tournament, all competing for the legendary DKE Trophy. Alongside the tournament, we serve up fresh pancakes and sausages to keep everyone fueled during the games. Meet at Centennial at 6:15 PM to walk over.",
     datetime: "2026-01-20T18:30:00",
-    location: "Invite Only",
+    location: "4 Cherokee St",
     image: "images/pongTrophy.JPG",
     open: false,
   },
